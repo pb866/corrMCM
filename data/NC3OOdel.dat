@@ -1,0 +1,7 @@
+NC3OOA = NC3OO : 	KDEC*0.11 	;
+NC3OOA = OH + NO2 + MGLYOX : 	KDEC*0.89 	;
+NC3OO + CO = NOA : 	1.2D-15 	;
+NC3OO + NO = NOA + NO2 : 	1.0D-14 	;
+NC3OO + NO2 = NOA + NO3 : 	1.0D-15 	;
+NC3OO + SO2 = NOA + SO3 : 	7.0D-14 	;
+NC3OO = NOA + H2O2 : 	6.0D-18*H2O 	;
