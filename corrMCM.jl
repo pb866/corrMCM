@@ -8,12 +8,22 @@ Correct duplicate species and their reactions in the MCMv3.3.1.
 """
 module corrMCM
 
-# Add path of self-made modules and load all modules
-push!(LOAD_PATH,"/Applications/bin/data/jl.mod")
-push!(LOAD_PATH,"~/Util/auxdata/jl.mod")
+# Define location of self-made modules
+# (use 2. script argument for general module path)
+try push!(LOAD_PATH,ARGS[2])
+catch
+  push!(LOAD_PATH,"/Applications/bin/data/jl.mod")
+  push!(LOAD_PATH,"~/Util/auxdata/jl.mod")
+end
 push!(LOAD_PATH,"./jl.mod")
 using fhandle, chk_mech
 import COHM2vCHOMOH, C4CONO3CO, NC3OO
+
+# Assume either DSMACC/mechanisms or DSMACC/mechanisms/programs/rmDUPRXN
+# as current directory, other wise add/adjust folder path here:
+if splitdir(pwd())[2] != "mechanisms"  def_dir = "../.."
+else def_dir = "."
+end
 
 # Add empty strings for missing arguments in ARGS
 for i = 1:1-length(ARGS)  push!(ARGS,"")  end
@@ -21,7 +31,7 @@ for i = 1:1-length(ARGS)  push!(ARGS,"")  end
 #––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
 
 # Check existance of kpp file
-kppfile = test_file(ARGS[1],default_dir="../..")
+kppfile = test_file(ARGS[1],default_dir=def_dir)
 
 # Open temporary file for revised mechanism
 tmpfile = splitext(kppfile)[1]*".tmp"
